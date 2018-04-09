@@ -1,5 +1,5 @@
-import App from '../pages/app';
-import Home from '../pages/home';
+import App from '../pages/app/app';
+import Home from '../pages/home/home.container';
 
 const routes = [
   {
