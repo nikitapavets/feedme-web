@@ -3,6 +3,7 @@ export default {
   white: '#fff',
   text: '#2a3245',
   transparent: 'transparent',
+  brand: '#4a73a4',
   box: `
     position: relative;
 

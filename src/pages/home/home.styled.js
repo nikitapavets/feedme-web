@@ -3,37 +3,7 @@ import { Link } from 'react-router-dom';
 
 import theme from '../../lib/theme';
 
-import wrapBg from '../../assets/images/main-bg.jpeg';
-export const Wrap = styled.div`
-  width: 100%;
-  height: 100vh;
-
-  background-image: url(${wrapBg});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-`;
-
-export const Header = styled.header`
-  position: fixed;
-  left: 0;
-  top: 0;
-
-  width: 100%;
-
-  padding: 5px 8px;
-
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
-export const Title = styled.div`
-  color: ${theme.white};
-
-  font-size: 1.3rem;
-  text-align: center;
-`;
-
-export const Content = styled.section`
+export const Wrap = styled.section`
   display: flex;
 
   height: 100%;
@@ -44,10 +14,8 @@ export const Content = styled.section`
 export const SearchWrap = styled.div`
   width: 100%;
 
-  padding: 30px 10px;
+  padding: 15px;
   margin: auto;
-
-  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 export const SearchField = styled.input`
@@ -61,4 +29,18 @@ export const SearchField = styled.input`
 
 export const SearchResults = styled.div``;
 
-export const SearchResult = styled(Link)``;
+export const SearchTitle = styled.h1`
+  margin: 0;
+
+  color: ${theme.white};
+`;
+
+export const SearchResult = styled(Link)`
+  color: ${theme.white};
+
+  margin-right: 15px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+`;

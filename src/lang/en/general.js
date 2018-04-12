@@ -1,4 +1,5 @@
 export default {
   siteTitle: 'FeedMe',
-  search: 'Search...'
+  search: 'Search...',
+  loadMore: 'Load More'
 };

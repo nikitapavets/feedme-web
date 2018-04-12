@@ -26,3 +26,28 @@ export const handleSubredditsLoad = () => dispatch => {
     .then(data => dispatch(handleSubredditsSuccess(data)))
     .catch(err => dispatch(handleSubredditsFailure(err)));
 };
+
+const handleSubredditRequest = () => ({
+  type: actionTypes.SUBREDDIT_REQUEST
+});
+
+const handleSubredditSuccess = subreddit => ({
+  type: actionTypes.SUBREDDIT_SUCCESS,
+  payload: { subreddit }
+});
+
+const handleSubredditFailure = error => ({
+  type: actionTypes.SUBREDDIT_FAILURE,
+  payload: { error }
+});
+
+export const handleSubredditLoad = name => dispatch => {
+  dispatch(handleSubredditRequest());
+
+  return request({
+    url: `/subreddits/` + name,
+    method: 'get'
+  })
+    .then(data => dispatch(handleSubredditSuccess(data)))
+    .catch(err => dispatch(handleSubredditFailure(err)));
+};

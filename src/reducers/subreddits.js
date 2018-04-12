@@ -63,6 +63,53 @@ export default function subreddits(state = initialState, action) {
       };
     }
 
+    case actionTypes.SUBREDDIT_REQUEST:
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          isLoading: true
+        }
+      };
+
+    case actionTypes.SUBREDDIT_SUCCESS: {
+      const { subreddit } = action.payload;
+      let subredditIndex = state.list.findIndex(_ => _.name === subreddit.name);
+      let newList = state.list;
+      if (subredditIndex !== -1) {
+        newList[subredditIndex] = {
+          ...newList[subredditIndex],
+          ...subreddit
+        };
+      } else {
+        newList[0] = {
+          ...subreddit,
+          filterVisible: true,
+          isInitialLoading: false
+        };
+      }
+
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          isLoading: false
+        },
+        list: newList
+      };
+    }
+
+    case actionTypes.SUBREDDIT_FAILURE: {
+      return {
+        ...state,
+        error: action.payload,
+        pagination: {
+          ...state.pagination,
+          isLoading: false
+        }
+      };
+    }
+
     default: {
       return state;
     }
