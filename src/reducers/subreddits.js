@@ -79,7 +79,8 @@ export default function subreddits(state = initialState, action) {
       if (subredditIndex !== -1) {
         newList[subredditIndex] = {
           ...newList[subredditIndex],
-          ...subreddit
+          ...subreddit,
+          isInitialLoading: false
         };
       } else {
         newList[0] = {
@@ -107,6 +108,29 @@ export default function subreddits(state = initialState, action) {
           ...state.pagination,
           isLoading: false
         }
+      };
+    }
+
+    case actionTypes.SUBREDDIT_FILTER: {
+      const { title } = action.payload;
+
+      return {
+        ...state,
+        list: [
+          ...state.list.map(subreddit => {
+            if (subreddit.title.includes(title)) {
+              return {
+                ...subreddit,
+                filterVisible: true
+              };
+            } else {
+              return {
+                ...subreddit,
+                filterVisible: false
+              };
+            }
+          })
+        ]
       };
     }
 

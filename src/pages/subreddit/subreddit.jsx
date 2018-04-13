@@ -22,6 +22,7 @@ import {
 class Subreddit extends React.Component {
   componentDidMount() {
     const { subreddits, loadSubreddit, name, isLoaded } = this.props;
+    console.log('isLoaded', isLoaded);
     !isLoaded && loadSubreddit(name);
   }
 
@@ -48,9 +49,9 @@ class Subreddit extends React.Component {
 
 const Posts = ({ posts }) =>
   posts.map(post =>
-    <PostCard>
+    <PostCard key={post.id}>
       <PostTitle>
-        <PostTitleLink to={'/'}>{post.title}</PostTitleLink>
+        <PostTitleLink to={post.url} target='_blank'>{post.title}</PostTitleLink>
       </PostTitle>
         <PostDescription>
           <PostDescriptionAuthor>{post.author}, </PostDescriptionAuthor>

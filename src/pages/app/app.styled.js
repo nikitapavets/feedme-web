@@ -1,4 +1,5 @@
 import styled, { injectGlobal } from 'styled-components';
+import { Link } from 'react-router-dom';
 import { normalize } from 'polished';
 
 import theme from '../../lib/theme';
@@ -28,29 +29,27 @@ injectGlobal`
     line-height: 1.5;
     word-break: break-word;
 
-    background: ${theme.white};
+    background: url(${wrapBg});
+    background-repeat: repeat;
   }
 
   input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px ${theme.grey_light} inset;
   }
 
-  a, 
-  a:visited,
-  a:active {
+  a {
     color: ${theme.brand};
     text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 
 `;
 
 export const Wrap = styled.div`
-  width: 100%;
-
   padding: 47px 8px 8px;
-
-  background-image: url(${wrapBg});
-  background-repeat: repeat;
 `;
 
 export const Header = styled.header`
@@ -65,11 +64,17 @@ export const Header = styled.header`
   background-color: ${theme.brand};
 `;
 
-export const Title = styled.div`
+export const Title = styled(Link)`
+  display: block;
+
   color: ${theme.white};
 
   font-size: 1.3rem;
   text-align: center;
+
+  &:hover {
+    text-decoration: none;
+  }
 `;
 
 export const Content = styled.div`

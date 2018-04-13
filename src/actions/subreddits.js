@@ -51,3 +51,8 @@ export const handleSubredditLoad = name => dispatch => {
     .then(data => dispatch(handleSubredditSuccess(data)))
     .catch(err => dispatch(handleSubredditFailure(err)));
 };
+
+export const handleSubredditFilter = title => ({
+  type: actionTypes.SUBREDDIT_FILTER,
+  payload: { title }
+});

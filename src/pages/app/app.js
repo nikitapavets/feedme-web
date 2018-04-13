@@ -11,7 +11,7 @@ import { Wrap, Header, Title, Content } from './app.styled';
 const App = () => (
   <Wrap>
     <Header>
-      <Title>{lang.general.siteTitle}</Title>
+      <Title to="/">{lang.general.siteTitle}</Title>
     </Header>
     <Content>
       <Switch>
