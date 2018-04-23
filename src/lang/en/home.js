@@ -1,3 +1,4 @@
 export default {
-  searchTitle: 'SubReddits'
+  searchTitle: 'SubReddits',
+  modalNewSubredditTitle: 'New subreddit'
 };

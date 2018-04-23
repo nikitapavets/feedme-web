@@ -15,6 +15,7 @@ import {
   SearchFieldWrap,
   SearchResults,
   SearchResult,
+  SearchAdd,
 } from './home.styled';
 
 class Home extends React.Component {
@@ -25,7 +26,7 @@ class Home extends React.Component {
 
 
   render() {
-    const { subreddits, filterSubreddits } = this.props;
+    const { subreddits, filterSubreddits, modalOpen } = this.props;
 
     return (
       <Wrap>
@@ -39,9 +40,11 @@ class Home extends React.Component {
 
               onChange={filterSubreddits}
             />
+            <SearchAdd onClick={_ => modalOpen(lang.home.modalNewSubredditTitle)}>
+              <Icon type='plus' />
+            </SearchAdd>
           </SearchFieldWrap>
           <SearchResults>
-            <Icon type='plus' />
             {subreddits.list.filter(_ => _.filterVisible === true).map(subreddit => (
               <SearchResult to={'/subreddits/' + subreddit.name} key={subreddit.id}>{subreddit.title}</SearchResult>
             ))}

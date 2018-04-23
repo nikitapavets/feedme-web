@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import Modal from '../../_components/Modal/Modal';
+
 import Home from '../home/home.container';
 import Subreddit from '../subreddit/subreddit.container';
 
@@ -8,7 +10,7 @@ import lang from '../../lang/en';
 
 import { Wrap, Header, Title, Content } from './app.styled';
 
-const App = () => (
+const App = ({ modals, modalClose }) => (
   <Wrap>
     <Header>
       <Title to="/">{lang.general.siteTitle}</Title>
@@ -19,6 +21,7 @@ const App = () => (
         <Route exact path="/subreddits/:name" component={Subreddit} />
       </Switch>
     </Content>
+    {modals.isOpen && <Modal onClose={modalClose} title={modals.title} />}
   </Wrap>
 );
 

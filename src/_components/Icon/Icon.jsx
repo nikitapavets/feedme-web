@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import theme from '../../lib/theme';
 
 import Plus from './_svg/plus.svg';
+import Close from './_svg/close.svg';
 
 class Icon extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class Icon extends React.Component {
 
     this.state = {
       plus: { default: <Plus /> },
+      close: { default: <Close /> },
     }
   }
 

@@ -1,4 +1,4 @@
-import App from '../pages/app/app';
+import App from '../pages/app/app.container';
 import Home from '../pages/home/home.container';
 import Subreddit from '../pages/subreddit/subreddit.container';
 
