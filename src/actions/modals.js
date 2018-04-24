@@ -2,9 +2,9 @@ import request from '../lib/request';
 
 import * as actionTypes from '../actions-types/modals.js';
 
-export const handleModalNewSubredditOpen = title => ({
+export const handleModalNewSubredditOpen = (title, description, onSend) => ({
   type: actionTypes.MODAL_NEW_SUBREDDIT_OPEN,
-  payload: { title }
+  payload: { title, description, onSend }
 });
 
 export const handleModalNewSubredditClose = () => ({

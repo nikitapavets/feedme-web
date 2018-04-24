@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, Form } from 'redux-form';
 
 import lang from '../../lang/en';
  
@@ -26,7 +26,7 @@ class Home extends React.Component {
 
 
   render() {
-    const { subreddits, filterSubreddits, modalOpen } = this.props;
+    const { subreddits, filterSubreddits, modalOpen, modalSend } = this.props;
 
     return (
       <Wrap>
@@ -40,7 +40,7 @@ class Home extends React.Component {
 
               onChange={filterSubreddits}
             />
-            <SearchAdd onClick={_ => modalOpen(lang.home.modalNewSubredditTitle)}>
+            <SearchAdd onClick={_ => modalOpen(lang.home.modalNewSubredditTitle, lang.home.modalNewSubredditDescription, modalSend)}>
               <Icon type='plus' />
             </SearchAdd>
           </SearchFieldWrap>

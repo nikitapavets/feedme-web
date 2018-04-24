@@ -2,7 +2,9 @@ import * as actionTypes from '../actions-types/modals';
 
 const initialState = {
   isOpen: false,
-  title: undefined
+  title: undefined,
+  description: undefined,
+  onSend: () => {}
 };
 
 export default function modals(state = initialState, action) {
@@ -11,15 +13,13 @@ export default function modals(state = initialState, action) {
       return {
         ...state,
         isOpen: true,
-        title: action.payload.title
+        title: action.payload.title,
+        description: action.payload.description,
+        onSend: action.payload.onSend
       };
 
     case actionTypes.MODAL_NEW_SUBREDDIT_CLOSE:
-      return {
-        ...state,
-        isOpen: false,
-        title: initialState.title
-      };
+      return initialState;
 
     default: {
       return state;

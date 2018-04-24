@@ -56,3 +56,29 @@ export const handleSubredditFilter = title => ({
   type: actionTypes.SUBREDDIT_FILTER,
   payload: { title }
 });
+
+const handleSubredditNewRequest = () => ({
+  type: actionTypes.SUBREDDIT_NEW_REQUEST
+});
+
+const handleSubredditNewSuccess = subreddit => ({
+  type: actionTypes.SUBREDDIT_NEW_SUCCESS,
+  payload: { subreddit }
+});
+
+const handleSubredditNewFailure = error => ({
+  type: actionTypes.SUBREDDIT_NEW_FAILURE,
+  payload: { error }
+});
+
+export const handleSubredditNew = name => dispatch => {
+  dispatch(handleSubredditNewRequest());
+
+  return request({
+    url: '/subreddits/',
+    method: 'post',
+    data: { name }
+  })
+    .then(data => dispatch(handleSubredditNewSuccess(data)))
+    .catch(err => dispatch(handleSubredditNewFailure(err)));
+};

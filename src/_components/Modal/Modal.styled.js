@@ -34,6 +34,18 @@ export const Title = styled.h2`
 
 export const Content = styled.div``;
 
+export const Description = styled.p``;
+
+export const Actions = styled.div`
+  margin-top: 15px;
+
+  text-align: right;
+`;
+
+export const SendBtn = styled.button`
+  ${theme.btn};
+`;
+
 export const Close = styled.button`
   ${theme.emptyBtn};
 
