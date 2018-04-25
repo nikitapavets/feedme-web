@@ -1,6 +1,7 @@
 import App from '../pages/app/app.container';
 import Home from '../pages/home/home.container';
 import Subreddit from '../pages/subreddit/subreddit.container';
+import Post from '../pages/post/post.container';
 
 const routes = [
   {
@@ -12,9 +13,14 @@ const routes = [
         component: Home
       },
       {
-        path: '/subreddits/:name',
+        path: '/subreddits/:subredditName',
         exact: true,
         component: Subreddit
+      },
+      {
+        path: '/subreddits/:subredditName/posts/:postName',
+        exact: true,
+        component: Post
       }
     ]
   }

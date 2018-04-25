@@ -5,6 +5,7 @@ import Modal from '../../_components/Modal/Modal.container';
 
 import Home from '../home/home.container';
 import Subreddit from '../subreddit/subreddit.container';
+import Post from '../post/post.container';
 
 import lang from '../../lang/en';
 
@@ -18,7 +19,13 @@ const App = ({ modals, modalClose }) => (
     <Content>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/subreddits/:name" component={Subreddit} />
+        <Route exact path="/subreddits/:subredditName" component={Subreddit} />
+        <Route exact path="/" component={Home} />
+        <Route
+          exact
+          path="/subreddits/:subredditName/posts/:postName"
+          component={Post}
+        />
       </Switch>
     </Content>
     {modals.isOpen && <Modal onClose={modalClose} {...modals} />}

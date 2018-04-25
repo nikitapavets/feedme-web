@@ -18,24 +18,25 @@ import {
 
   LoadMore,
   LoadMoreButton,
-} from './subreddit.styled';
+} from './post.styled';
 
-class Subreddit extends React.Component {
+class Post extends React.Component {
   componentDidMount() {
-    const { loadSubreddit, subredditName, isLoaded } = this.props;
-    !isLoaded && loadSubreddit(subredditName);
+    const { subreddits, loadSubreddit, subredditName, isLoadedSubreddit } = this.props;
+    !isLoadedSubreddit && loadSubreddit(subredditName);
   }
 
 
   render() {
-    const { subreddits, subredditName } = this.props;
-    const subreddit = subreddits.list.find(_ => _.name === subredditName)
+    const { subreddits, name } = this.props;
+    const subreddit = subreddits.list.find(_ => _.name === name)
+    console.log(subreddits.list);
 
     return (
       subreddit ? (
         <Wrap>
           <SubredditTitle>{subreddit.title}</SubredditTitle>
-          <Posts subreddit={subreddit} posts={subreddit.posts}/>
+          {/* <Comments comments={subreddit.posts}/> */}
           <LoadMore>
             <LoadMoreButton>{lang.general.loadMore}</LoadMoreButton>
           </LoadMore>
@@ -47,7 +48,7 @@ class Subreddit extends React.Component {
   }
 }
 
-const Posts = ({ subreddit, posts }) =>
+const Comments = ({ subreddit, posts }) =>
   posts.map(post =>
     <PostCard key={post.id}>
       <PostTitle>
@@ -61,6 +62,6 @@ const Posts = ({ subreddit, posts }) =>
     </PostCard>
   );
 
-Subreddit.propTypes = {};
+  Post.propTypes = {};
 
-export default Subreddit;
+export default Post;
