@@ -2,6 +2,8 @@ import request from '../lib/request';
 
 import * as actionTypes from '../actions-types/subreddits.js';
 
+import { handleModalNewSubredditClose } from './modals';
+
 const handleSubredditsRequest = () => ({
   type: actionTypes.SUBREDDITS_REQUEST
 });
@@ -75,10 +77,13 @@ export const handleSubredditNew = name => dispatch => {
   dispatch(handleSubredditNewRequest());
 
   return request({
-    url: '/subreddits/',
+    url: '/subreddits',
     method: 'post',
     data: { name }
   })
-    .then(data => dispatch(handleSubredditNewSuccess(data)))
+    .then(data => {
+      dispatch(handleSubredditNewSuccess(data));
+      dispatch(handleModalNewSubredditClose());
+    })
     .catch(err => dispatch(handleSubredditNewFailure(err)));
 };

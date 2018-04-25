@@ -134,6 +134,28 @@ export default function subreddits(state = initialState, action) {
       };
     }
 
+    case actionTypes.SUBREDDIT_NEW_SUCCESS: {
+      const { subreddit } = action.payload;
+
+      return {
+        ...state,
+        list: [
+          {
+            ...subreddit,
+            filterVisible: true,
+            isInitialLoading: true,
+            pagination: {
+              current: 0,
+              last: 0,
+              isLoading: true
+            },
+            posts: []
+          },
+          ...state.list
+        ]
+      };
+    }
+
     default: {
       return state;
     }

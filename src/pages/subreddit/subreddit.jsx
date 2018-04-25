@@ -22,7 +22,6 @@ import {
 class Subreddit extends React.Component {
   componentDidMount() {
     const { subreddits, loadSubreddit, name, isLoaded } = this.props;
-    console.log('isLoaded', isLoaded);
     !isLoaded && loadSubreddit(name);
   }
 
