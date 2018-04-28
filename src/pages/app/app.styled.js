@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { normalize } from 'polished';
 
 import theme from '../../lib/theme';
+import media from '../../lib/media';
 
 import wrapBg from '../../assets/images/main-bg.png';
 
@@ -83,4 +84,10 @@ export const Content = styled.div`
   padding: 8px;
 
   background-color: rgba(255, 255, 255, 0.75);
+
+  ${media.desktop`
+    max-width: ${theme.containerWidth};
+
+    margin: 0 auto;
+  `};
 `;

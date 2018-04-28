@@ -87,3 +87,28 @@ export const handleSubredditNew = name => dispatch => {
     })
     .catch(err => dispatch(handleSubredditNewFailure(err)));
 };
+
+const handlePostRequest = () => ({
+  type: actionTypes.POST_REQUEST
+});
+
+const handlePostSuccess = (subredditName, post) => ({
+  type: actionTypes.POST_SUCCESS,
+  payload: { subredditName, post }
+});
+
+const handlePostFailure = error => ({
+  type: actionTypes.POST_FAILURE,
+  payload: { error }
+});
+
+export const handlePostLoad = (subredditName, postName) => dispatch => {
+  dispatch(handlePostRequest());
+
+  return request({
+    url: '/posts/' + postName,
+    method: 'get'
+  })
+    .then(data => dispatch(handlePostSuccess(subredditName, data)))
+    .catch(err => dispatch(handlePostFailure(err)));
+};

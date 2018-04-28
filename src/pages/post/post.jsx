@@ -1,67 +1,84 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import renderHTML from 'react-render-html';
 
 import lang from '../../lang/en'
 
 import {
   Wrap,
 
-  SubredditTitle,
-
-  PostCard,
   PostTitle,
-  PostTitleLink,
   PostDescription,
-  PostDescriptionAuthor,
-  PostDescriptionDate,
-  PostDescriptionComments,
 
-  LoadMore,
-  LoadMoreButton,
+  CommentCard,
+  CommentMessage,
+  CommentDescription,
+  CommentAuthor,
+  CommentDate,
+
+  CommentsTitle,
+  CommentsContent,
 } from './post.styled';
 
 class Post extends React.Component {
   componentDidMount() {
-    const { subreddits, loadSubreddit, subredditName, isLoadedSubreddit } = this.props;
-    !isLoadedSubreddit && loadSubreddit(subredditName);
+    const { subredditLoad, postLoad, subredditName, postName, isLoadedSubreddit, isLoadedPost } = this.props;
+    !isLoadedSubreddit && subredditLoad(subredditName).then(_ => postLoad(subredditName, postName));
+    isLoadedSubreddit && !isLoadedPost && postLoad(subredditName, postName);
   }
 
+  printCommentsGrid(gridRootNodes, level = 1) {
+    let comments = [];
+
+    gridRootNodes.forEach(rootNode => {
+      comments = [
+        ...comments,
+        <Comment key={rootNode.id} comment={rootNode} level={level}/>
+      ]
+      if(rootNode.children.length) {
+        comments = [
+          ...comments,
+          ...this.printCommentsGrid(rootNode.children, level + 1)
+        ];
+      } 
+    });
+
+    return comments;
+  }
+
+  printComments(gridRootNodes, level = 1) {
+    const comments = this.printCommentsGrid(gridRootNodes, level);
+    return comments.length ? comments : lang.post.noComments;
+  }
 
   render() {
-    const { subreddits, name } = this.props;
-    const subreddit = subreddits.list.find(_ => _.name === name)
-    console.log(subreddits.list);
+    const { post, isLoadedPost } = this.props;
 
     return (
-      subreddit ? (
+      post ? (
         <Wrap>
-          <SubredditTitle>{subreddit.title}</SubredditTitle>
-          {/* <Comments comments={subreddit.posts}/> */}
-          <LoadMore>
-            <LoadMoreButton>{lang.general.loadMore}</LoadMoreButton>
-          </LoadMore>
-        </Wrap>
-      ) : (
-          <div>Loading...</div>
-        )
+          <PostTitle>{post.title}</PostTitle>
+          {post.description && <PostDescription>{renderHTML(renderHTML(post.description))}</PostDescription>}
+          <CommentsTitle>{lang.post.comments}</CommentsTitle>
+          <CommentsContent>
+            {isLoadedPost ? this.printComments(post.comments_grid) : <div>Loading...</div>}
+          </CommentsContent>
+        </Wrap> 
+      ) : <div>Loading...</div>
     );
   }
 }
 
-const Comments = ({ subreddit, posts }) =>
-  posts.map(post =>
-    <PostCard key={post.id}>
-      <PostTitle>
-        <PostTitleLink to={post.url} target='_blank'>{post.title}</PostTitleLink>
-      </PostTitle>
-        <PostDescription>
-          <PostDescriptionComments to={`/subreddits/${subreddit.name}/posts/${post.name}`}>0 {lang.subreddit.comments}</PostDescriptionComments>
-          <PostDescriptionAuthor>, {post.author}, </PostDescriptionAuthor>
-          <PostDescriptionDate>{post.created_at}</PostDescriptionDate>
-        </PostDescription>
-    </PostCard>
-  );
+const Comment = ({ comment, level }) =>
+  <CommentCard level={level}>
+    <CommentMessage>{renderHTML(comment.message)}</CommentMessage>
+    <CommentDescription>
+      <CommentAuthor>{comment.author}, </CommentAuthor>
+      <CommentDate>{comment.created_at}</CommentDate>
+    </CommentDescription>
+  </CommentCard>
 
-  Post.propTypes = {};
+
+Post.propTypes = {};
 
 export default Post;

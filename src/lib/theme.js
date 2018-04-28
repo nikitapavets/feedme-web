@@ -3,11 +3,13 @@ const colors = {
   white: '#fff',
   text: '#2a3245',
   transparent: 'transparent',
-  brand: '#4a73a4'
+  brand: '#4a73a4',
+  brandBg: '#4a73a41f'
 };
 
 export default {
   ...colors,
+  containerWidth: '980px',
   box: `
     position: relative;
 

@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import lang from '../../lang/en'
+import config from '../../config';
 
 import {
   Wrap,
+  Header,
 
   SubredditTitle,
+
+  Filters,
+  Filter,
 
   PostCard,
   PostTitle,
@@ -21,11 +26,31 @@ import {
 } from './subreddit.styled';
 
 class Subreddit extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      filters: [
+        {
+          name: lang.subreddit.filterNew,
+          type: config.filter.FILTER_NEW,
+        },
+        {
+          name: lang.subreddit.filterHot,
+          type: config.filter.FILTER_HOT,
+        },
+        {
+          name: lang.subreddit.filterControversial,
+          type: config.filter.FILTER_CONTROVERSIAL,
+        },
+      ]
+    };
+  }
+
   componentDidMount() {
     const { loadSubreddit, subredditName, isLoaded } = this.props;
     !isLoaded && loadSubreddit(subredditName);
   }
-
 
   render() {
     const { subreddits, subredditName } = this.props;
@@ -34,8 +59,15 @@ class Subreddit extends React.Component {
     return (
       subreddit ? (
         <Wrap>
-          <SubredditTitle>{subreddit.title}</SubredditTitle>
-          <Posts subreddit={subreddit} posts={subreddit.posts}/>
+          <Header>
+            <SubredditTitle>{subreddit.title}</SubredditTitle>
+            <Filters>
+              {this.state.filters.map(filter => (
+                <Filter key={filter.id}>{filter.name}</Filter>
+              ))}
+            </Filters>
+          </Header>
+          <Posts subreddit={subreddit} posts={subreddit.posts} />
           <LoadMore>
             <LoadMoreButton>{lang.general.loadMore}</LoadMoreButton>
           </LoadMore>
@@ -53,11 +85,15 @@ const Posts = ({ subreddit, posts }) =>
       <PostTitle>
         <PostTitleLink to={post.url} target='_blank'>{post.title}</PostTitleLink>
       </PostTitle>
-        <PostDescription>
-          <PostDescriptionComments to={`/subreddits/${subreddit.name}/posts/${post.name}`}>0 {lang.subreddit.comments}</PostDescriptionComments>
-          <PostDescriptionAuthor>, {post.author}, </PostDescriptionAuthor>
-          <PostDescriptionDate>{post.created_at}</PostDescriptionDate>
-        </PostDescription>
+      <PostDescription>
+        <PostDescriptionComments to={`/subreddits/${subreddit.name}/posts/${post.name}`}>
+          {!post.isInitialLoading ?
+            `${post.comments_count} ${lang.subreddit.comments}` :
+            lang.subreddit.noLoadedComments}
+        </PostDescriptionComments>
+        <PostDescriptionAuthor>, {post.author}, </PostDescriptionAuthor>
+        <PostDescriptionDate>{post.created_at}</PostDescriptionDate>
+      </PostDescription>
     </PostCard>
   );
 

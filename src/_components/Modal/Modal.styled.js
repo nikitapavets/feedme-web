@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import theme from '../../lib/theme';
+import media from '../../lib/media';
 
 export const Wrap = styled.div`
   position: fixed;
@@ -24,6 +25,12 @@ export const Body = styled.div`
   background: ${theme.white};
 
   width: 100%;
+
+  ${media.tablet`
+    max-width: 450px;
+
+    margin: auto;
+  `};
 `;
 
 export const Title = styled.h2`
@@ -55,4 +62,6 @@ export const Close = styled.button`
 
   width: 14px;
   height: 14px;
+
+  cursor: pointer;
 `;

@@ -2,6 +2,7 @@ import * as actionTypes from '../actions-types/subreddits';
 
 const initialState = {
   isInitialLoading: true,
+  alreadyLoaded: [],
   pagination: {
     current: 0,
     last: 0,
@@ -36,17 +37,19 @@ export default function subreddits(state = initialState, action) {
         },
         list: [
           ...state.list,
-          ...subreddits.data.map(subreddit => ({
-            ...subreddit,
-            filterVisible: true,
-            isInitialLoading: true,
-            pagination: {
-              current: 0,
-              last: 0,
-              isLoading: true
-            },
-            posts: []
-          }))
+          ...subreddits.data
+            .filter(subreddit => !state.alreadyLoaded.includes(subreddit.name))
+            .map(subreddit => ({
+              ...subreddit,
+              filterVisible: true,
+              isInitialLoading: true,
+              pagination: {
+                current: 0,
+                last: 0,
+                isLoading: true
+              },
+              posts: []
+            }))
         ]
       };
     }
@@ -77,14 +80,29 @@ export default function subreddits(state = initialState, action) {
       let subredditIndex = state.list.findIndex(_ => _.name === subreddit.name);
       let newList = state.list;
       if (subredditIndex !== -1) {
-        newList[subredditIndex] = {
-          ...newList[subredditIndex],
-          ...subreddit,
+        newList[subredditIndex !== -1 ? subredditIndex : 0] = {
+          ...(subredditIndex !== -1 ? newList[subredditIndex] : {}),
+          ...{
+            ...subreddit,
+            posts: subreddit.posts.map(post => ({
+              ...post,
+              filterVisible: true,
+              isInitialLoading: true
+            }))
+          },
+          filterVisible: true,
           isInitialLoading: false
         };
       } else {
         newList[0] = {
-          ...subreddit,
+          ...{
+            ...subreddit,
+            posts: subreddit.posts.map(post => ({
+              ...post,
+              filterVisible: true,
+              isInitialLoading: true
+            }))
+          },
           filterVisible: true,
           isInitialLoading: false
         };
@@ -92,6 +110,7 @@ export default function subreddits(state = initialState, action) {
 
       return {
         ...state,
+        alreadyLoaded: [...state.alreadyLoaded, subreddit.name],
         pagination: {
           ...state.pagination,
           isLoading: false
@@ -139,6 +158,7 @@ export default function subreddits(state = initialState, action) {
 
       return {
         ...state,
+        alreadyLoaded: [...state.alreadyLoaded, subreddit.name],
         list: [
           {
             ...subreddit,
@@ -153,6 +173,42 @@ export default function subreddits(state = initialState, action) {
           },
           ...state.list
         ]
+      };
+    }
+
+    case actionTypes.POST_REQUEST:
+      return {
+        ...state
+      };
+
+    case actionTypes.POST_SUCCESS: {
+      const { subredditName, post } = action.payload;
+      let subredditIndex = state.list.findIndex(_ => _.name === subredditName);
+      let newList = state.list;
+      let newPosts = state.list[subredditIndex].posts;
+      let postIndex = newPosts.findIndex(_ => _.name === post.name);
+      newPosts[postIndex] = {
+        ...newPosts[postIndex],
+        ...post,
+        isInitialLoading: false
+      };
+      newList[subredditIndex].posts = newPosts;
+
+      return {
+        ...state,
+        list: newList
+      };
+    }
+
+    case actionTypes.POST_FAILURE: {
+      console.log(action.payload);
+      return {
+        ...state,
+        error: action.payload,
+        pagination: {
+          ...state.pagination,
+          isLoading: false
+        }
       };
     }
 

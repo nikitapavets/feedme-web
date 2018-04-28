@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import config from '../../config';
+
 import {
   handleSubredditsLoad,
   handleSubredditNew,
@@ -15,6 +17,7 @@ import Home from './home'
 
 const mapStateToProps = ({ subreddits }) => ({
   subreddits,
+  isVisibleSearchField: subreddits.list.length > config.client.searchFieldLimit
 });
 
 const mapDispatchToProps = dispatch => ({

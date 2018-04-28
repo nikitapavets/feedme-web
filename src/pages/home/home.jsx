@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm, Form } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 
 import lang from '../../lang/en';
- 
+
 import Input from '../../_components/Input/Input';
 import Icon from '../../_components/Icon/Icon';
 
 import {
   Wrap,
+
+  AboutBlock,
+  AboutTitle,
+  AboutDescription,
 
   SearchBlock,
   SearchTitle,
@@ -26,21 +30,27 @@ class Home extends React.Component {
 
 
   render() {
-    const { subreddits, filterSubreddits, modalOpen, modalSend } = this.props;
+    const { subreddits, filterSubreddits, modalOpen, modalSend, isVisibleSearchField } = this.props;
 
     return (
       <Wrap>
+        <AboutBlock>
+          <AboutTitle>{lang.home.about}</AboutTitle>
+          <AboutDescription>{lang.home.description}</AboutDescription>
+        </AboutBlock>
         <SearchBlock>
           <SearchTitle>{lang.home.searchTitle}</SearchTitle>
           <SearchFieldWrap>
-            <Field
-              name="search"
-              component={Input}
-              type="search"
+            {isVisibleSearchField &&
+              <Field
+                name="search"
+                component={Input}
+                type="search"
 
-              onChange={filterSubreddits}
-            />
-            <SearchAdd onClick={_ => modalOpen(lang.home.modalNewSubredditTitle, lang.home.modalNewSubredditDescription, modalSend)}>
+                onChange={filterSubreddits}
+              />
+            }
+            <SearchAdd isVisibleSearchField={isVisibleSearchField} onClick={_ => modalOpen(lang.home.modalNewSubredditTitle, lang.home.modalNewSubredditDescription, modalSend)}>
               <Icon type='plus' />
             </SearchAdd>
           </SearchFieldWrap>

@@ -1,3 +1,7 @@
 export default {
-  comments: 'comments'
+  comments: 'comments',
+  noLoadedComments: "Comments hasn't loaded yet",
+  filterNew: 'new',
+  filterHot: 'hot',
+  filterControversial: 'controversial'
 };
