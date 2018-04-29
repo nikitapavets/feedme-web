@@ -1,5 +1,3 @@
-import request from '../lib/request';
-
 import * as actionTypes from '../actions-types/modals.js';
 
 export const handleModalNewSubredditOpen = (title, description, onSend) => ({

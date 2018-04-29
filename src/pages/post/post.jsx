@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
 
 import lang from '../../lang/en'
@@ -77,8 +76,5 @@ const Comment = ({ comment, level }) =>
       <CommentDate>{comment.created_at}</CommentDate>
     </CommentDescription>
   </CommentCard>
-
-
-Post.propTypes = {};
 
 export default Post;

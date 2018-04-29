@@ -1,1 +1,5 @@
 # FeedMe
+
+```
+npm start
+```

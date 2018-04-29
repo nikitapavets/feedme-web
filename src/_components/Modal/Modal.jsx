@@ -32,7 +32,7 @@ class Modal extends React.Component {
     return (
       <Wrap>
         <Body>
-          <Form onSubmit={event => {onSend(event, formModal.values ? formModal.values.data : "");}}>
+          <Form onSubmit={event => { onSend(event, formModal.values ? formModal.values.data : ""); }}>
             <Title>{title}</Title>
             <Content>
               {description && <Description>{description}</Description>}

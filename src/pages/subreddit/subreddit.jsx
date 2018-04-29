@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import lang from '../../lang/en'
 import config from '../../config';
@@ -10,8 +9,8 @@ import {
 
   SubredditTitle,
 
-  Filters,
-  Filter,
+  // Filters,
+  // Filter,
 
   PostCard,
   PostTitle,
@@ -61,11 +60,11 @@ class Subreddit extends React.Component {
         <Wrap>
           <Header>
             <SubredditTitle>{subreddit.title}</SubredditTitle>
-            <Filters>
+            {/* <Filters>
               {this.state.filters.map(filter => (
                 <Filter key={filter.id}>{filter.name}</Filter>
               ))}
-            </Filters>
+            </Filters> */}
           </Header>
           <Posts subreddit={subreddit} posts={subreddit.posts} />
           <LoadMore>
@@ -96,7 +95,5 @@ const Posts = ({ subreddit, posts }) =>
       </PostDescription>
     </PostCard>
   );
-
-Subreddit.propTypes = {};
 
 export default Subreddit;
